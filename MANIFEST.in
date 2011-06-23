@@ -1,0 +1,3 @@
+include *.py
+global-include *.rst *.txt
+prune build
