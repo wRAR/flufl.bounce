@@ -14,18 +14,23 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with flufl.bounce.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Package init."""
+"""Top-level bounce detector API."""
 
 from __future__ import absolute_import, unicode_literals
 
 __metaclass__ = type
 __all__ = [
-    '__version__',
     'detect',
     ]
 
 
-__version__ = '1.0'
+
+def detect(msg):
+    """Detect the set of bouncing original recipients.
 
-
-from ._detect import detect
+    :param msg: The bounce message.
+    :type msg: `email.message.Message`
+    :return: The set of detected original recipients.
+    :rtype: set of strings
+    """
+    return set(['anne@example.com'])

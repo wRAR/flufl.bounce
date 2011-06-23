@@ -35,10 +35,10 @@ setup(
     include_package_data=True,
     maintainer='Barry Warsaw',
     maintainer_email='barry@python.org',
-    description=description('README.txt'),
+    description=description('README.rst'),
     long_description=long_description(
-        'flufl/bounce/README.txt',
-        'flufl/bounce/NEWS.txt'),
+        'flufl/bounce/README.rst',
+        'flufl/bounce/NEWS.rst'),
     license='LGPLv3',
     url='http://launchpad.net/flufl.bounce',
     download_url='https://launchpad.net/flufl.bounce/+download',
