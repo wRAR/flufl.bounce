@@ -64,7 +64,7 @@ def scan_message(msg):
     :rtype: set of strings
     """
     fatal_addresses = set()
-    package = 'flufl.bounce._bouncers'
+    package = 'flufl.bounce._detectors'
     for detector_class in _find_detectors(package):
         addresses = detector_class().process(msg)
         if addresses is Stop:

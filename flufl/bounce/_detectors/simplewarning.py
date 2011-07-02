@@ -23,8 +23,8 @@ __all__ = [
     ]
 
 
-from flufl.bounce._bouncers.simplematch import _c
-from flufl.bounce._bouncers.simplematch import SimpleMatch
+from flufl.bounce._detectors.simplematch import _c
+from flufl.bounce._detectors.simplematch import SimpleMatch
 from flufl.bounce._interfaces import Stop
 
 

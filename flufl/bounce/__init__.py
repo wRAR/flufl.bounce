@@ -28,4 +28,4 @@ __all__ = [
 __version__ = '1.0'
 
 
-from ._detect import scan_message
+from ._scan import scan_message

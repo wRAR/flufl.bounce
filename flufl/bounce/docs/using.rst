@@ -17,7 +17,7 @@ top-level function, and get back a set of email addresses detected as
 bouncing.  Here for example, is a simple DSN-like bounce message:
 
     >>> from email import message_from_string as parse
-    >>> msg = parse("""\
+    >>> msg = parse(b"""\
     ... From: Mail Delivery Subsystem <mailer-daemon@example.com>
     ... To: list-bounces@example.com
     ... Subject: Delivery Report
