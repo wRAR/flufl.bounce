@@ -31,8 +31,6 @@ from contextlib import closing
 from email import message_from_file
 from pkg_resources import resource_stream
 
-from flufl.bounce._interfaces import Stop
-
 
 COMMASPACE = ', '
 
@@ -46,7 +44,7 @@ class BounceTestCase(unittest.TestCase):
         unittest.TestCase.__init__(self)
         self.bounce_module = bounce_module
         self.sample_file = sample_file
-        self.expected = (expected if expected is Stop else set(expected))
+        self.expected = set(expected)
 
     def setUp(self):
         """See `unittest.TestCase`."""
@@ -59,10 +57,7 @@ class BounceTestCase(unittest.TestCase):
 
     def shortDescription(self):
         """See `unittest.TestCase`."""
-        if self.expected is Stop:
-            expected = 'Stop'
-        else:
-            expected = COMMASPACE.join(sorted(self.expected))
+        expected = COMMASPACE.join(sorted(self.expected))
         return '{0}: detecting {1} in {2}'.format(
             self.bounce_module, expected, self.sample_file)
 
@@ -82,8 +77,11 @@ class BounceTestCase(unittest.TestCase):
                 raise RuntimeError(
                     'skipping missing __all__ entry: {0}'.format(name))
             component = component_class()
-            found_expected = component.process(self.message)
-            self.assertEqual(found_expected, self.expected)
+            # XXX 2011-07-02: We don't currently test temporary failures.
+            temporary, permanent = component.process(self.message)
+            temporary = set(temporary)
+            permanent = set(permanent)
+            self.assertEqual(permanent, self.expected)
 
 
 
@@ -144,11 +142,11 @@ DATA = (
     ('simplematch', 'bounce_02.txt', ['acinsp1@midsouth.rr.com']),
     ('simplematch', 'bounce_03.txt', ['james@jeborall.demon.co.uk']),
     # SimpleWarning
-    ('simplewarning', 'simple_03.txt', Stop),
-    ('simplewarning', 'simple_21.txt', Stop),
-    ('simplewarning', 'simple_22.txt', Stop),
-    ('simplewarning', 'simple_28.txt', Stop),
-    ('simplewarning', 'simple_35.txt', Stop),
+    ## ('simplewarning', 'simple_03.txt', Stop),
+    ## ('simplewarning', 'simple_21.txt', Stop),
+    ## ('simplewarning', 'simple_22.txt', Stop),
+    ## ('simplewarning', 'simple_28.txt', Stop),
+    ## ('simplewarning', 'simple_35.txt', Stop),
     # GroupWise
     ('groupwise', 'groupwise_01.txt', ['thoff@MAINEX1.ASU.EDU']),
     # This one really sucks 'cause it's text/html.  Just make sure it
@@ -165,10 +163,10 @@ DATA = (
     ('dsn', 'dsn_02.txt', ['zzzzz@zeus.hud.ac.uk']),
     ('dsn', 'dsn_03.txt', ['ddd.kkk@advalvas.be']),
     ('dsn', 'dsn_04.txt', ['max.haas@unibas.ch']),
-    ('dsn', 'dsn_05.txt', Stop),
-    ('dsn', 'dsn_06.txt', Stop),
-    ('dsn', 'dsn_07.txt', Stop),
-    ('dsn', 'dsn_08.txt', Stop),
+    ## ('dsn', 'dsn_05.txt', Stop),
+    ## ('dsn', 'dsn_06.txt', Stop),
+    ## ('dsn', 'dsn_07.txt', Stop),
+    ## ('dsn', 'dsn_08.txt', Stop),
     ('dsn', 'dsn_09.txt', ['pr@allen-heath.com']),
     ('dsn', 'dsn_10.txt', ['anne.person@dom.ain']),
     ('dsn', 'dsn_11.txt', ['joem@example.com']),
@@ -177,7 +175,7 @@ DATA = (
     ('dsn', 'dsn_14.txt', ['artboardregistration@home.dk']),
     ('dsn', 'dsn_15.txt', ['horu@ccc-ces.com']),
     ('dsn', 'dsn_16.txt', ['hishealinghand@pastors.com']),
-    ('dsn', 'dsn_17.txt', Stop),
+    ## ('dsn', 'dsn_17.txt', Stop),
     # Microsoft Exchange
     ('exchange', 'microsoft_01.txt', ['DJBENNETT@IKON.COM']),
     ('exchange', 'microsoft_02.txt', ['MDMOORE@BALL.COM']),

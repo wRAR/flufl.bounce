@@ -33,7 +33,7 @@ __all__ = [
 from email.utils import getaddresses
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 
@@ -45,4 +45,4 @@ class Exim:
     def process(self, msg):
         """See `IBounceDetector`."""
         all = msg.get_all('x-failed-recipients', [])
-        return set(address for name, address in getaddresses(all))
+        return (), set(address for name, address in getaddresses(all))

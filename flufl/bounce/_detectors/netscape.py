@@ -39,7 +39,7 @@ import re
 from cStringIO import StringIO
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 pcre = re.compile(
@@ -75,7 +75,7 @@ class Netscape:
         # and some show
         #     multipart/mixed;
         if not msg.is_multipart():
-            return set()
+            return (), ()
         # We're looking for a text/plain subpart occuring before a
         # message/delivery-status subpart.
         plainmsg = None
@@ -86,7 +86,7 @@ class Netscape:
                 plainmsg = subpart
                 break
         if not plainmsg:
-            return set()
+            return (), ()
         # Total guesswork, based on captured examples...
         body = StringIO(plainmsg.get_payload())
         addresses = set()
@@ -100,4 +100,4 @@ class Netscape:
                     mo = acre.search(line)
                     if mo and not mo.group('reply'):
                         addresses.add(mo.group('addr'))
-        return addresses
+        return (), addresses

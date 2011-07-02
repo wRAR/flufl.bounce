@@ -32,7 +32,7 @@ from email.quoprimime import unquote
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 class ParseState(Enum):
@@ -256,4 +256,4 @@ class SimpleMatch:
                         break
             if len(addresses) > 0:
                 break
-        return addresses
+        return (), addresses

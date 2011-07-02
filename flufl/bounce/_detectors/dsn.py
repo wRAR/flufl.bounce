@@ -33,7 +33,7 @@ from email.iterators import typed_subpart_iterator
 from email.utils import parseaddr
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector, Stop
+from flufl.bounce._interfaces import IBounceDetector
 
 
 
@@ -91,12 +91,13 @@ class DSN:
                         for param in params:
                             if param.startswith('<') and param.endswith('>'):
                                 address_set.append(param[1:-1])
-        # There may be both delayed and failed addresses.  If there are any
-        # failed addresses, return those, otherwise just stop processing.
-        if len(failed_addresses) == 0:
-            if len(delayed_addresses) == 0:
-                return set()
-            else:
-                return Stop
-        return set(parseaddr(address)[1] for address in failed_addresses
-                   if address is not None)
+        # There may be Nones in the current set of failures, so filter those
+        # out of both sets.
+        return (
+            # First, the delayed, or temporary failures.
+            set(parseaddr(address)[1] for address in delayed_addresses
+                if address is not None),
+            # And now the failed or permanent failures.
+            set(parseaddr(address)[1] for address in failed_addresses
+                if address is not None)
+            )

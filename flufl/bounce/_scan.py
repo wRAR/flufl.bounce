@@ -28,7 +28,7 @@ import os
 import sys
 import logging
 
-from flufl.bounce._interfaces import IBounceDetector, Stop
+from flufl.bounce._interfaces import IBounceDetector
 from pkg_resources import resource_listdir
 
 
@@ -56,18 +56,35 @@ def _find_detectors(package):
 
 
 def scan_message(msg):
-    """Detect the set of bouncing original recipients.
+    """Detect the set of all permanently bouncing original recipients.
 
     :param msg: The bounce message.
     :type msg: `email.message.Message`
     :return: The set of detected original recipients.
     :rtype: set of strings
     """
-    fatal_addresses = set()
+    permanent_failures = set()
     package = 'flufl.bounce._detectors'
     for detector_class in _find_detectors(package):
-        addresses = detector_class().process(msg)
-        if addresses is Stop:
-            return Stop
-        fatal_addresses.update(addresses)
-    return fatal_addresses
+        temporary, permanent = detector_class().process(msg)
+        permanent_failures.update(permanent)
+    return permanent_failures
+
+
+
+def all_failures(msg):
+    """Detect the set of all bouncing original recipients.
+
+    :param msg: The bounce message.
+    :type msg: `email.message.Message`
+    :return: 2-tuple of the temporary failure set and permanent failure set.
+    :rtype: (set of strings, set of string)
+    """
+    temporary_failures = set()
+    permanent_failures = set()
+    package = 'flufl.bounce._detectors'
+    for detector_class in _find_detectors(package):
+        temporary, permanent = detector_class().process(msg)
+        temporary_failures.update(temporary)
+        permanent_failures.update(permanent)
+    return temporary, permanent

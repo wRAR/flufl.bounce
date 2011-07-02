@@ -25,7 +25,6 @@ __all__ = [
 
 from flufl.bounce._detectors.simplematch import _c
 from flufl.bounce._detectors.simplematch import SimpleMatch
-from flufl.bounce._interfaces import Stop
 
 
 
@@ -75,8 +74,6 @@ class SimpleWarning(SimpleMatch):
 
     def process(self, msg):
         """See `SimpleMatch`."""
-        if super(SimpleWarning, self).process(msg):
-            # It's a recognized warning so stop now.
-            return Stop
-        else:
-            return set()
+        # Since these are warnings, they're classified as temporary failures.
+        # There are no permanent failures.
+        return super(SimpleWarning, self).process(msg), ()

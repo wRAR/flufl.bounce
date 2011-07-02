@@ -41,7 +41,7 @@ import re
 from email.iterators import body_line_iterator
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 ecre = re.compile('original message follows', re.IGNORECASE)
@@ -70,7 +70,7 @@ class SMTP32:
     def process(self, msg):
         mailer = msg.get('x-mailer', '')
         if not mailer.startswith('<SMTP32 v'):
-            return set()
+            return (), ()
         addresses = set()
         for line in body_line_iterator(msg):
             if ecre.search(line):
@@ -78,4 +78,4 @@ class SMTP32:
             mo = acre.search(line)
             if mo:
                 addresses.add(mo.group('addr'))
-        return addresses
+        return (), addresses

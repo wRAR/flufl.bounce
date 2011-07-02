@@ -30,7 +30,7 @@ import re
 from email.Utils import parseaddr
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 scre = re.compile('mail to the following recipients could not be delivered')
@@ -62,4 +62,4 @@ class AOL:
                         addresses.add(local)
                     else:
                         addresses.add('{0}@aol.com'.format(local))
-        return addresses
+        return (), addresses

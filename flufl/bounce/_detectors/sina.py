@@ -30,7 +30,7 @@ import re
 from email.iterators import body_line_iterator
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 acre = re.compile(r'<(?P<addr>[^>]*)>')
@@ -45,9 +45,9 @@ class Sina:
     def process(self, msg):
         """See `IBounceDetector`."""
         if msg.get('from', '').lower() != 'mailer-daemon@sina.com':
-            return set()
+            return (), ()
         if not msg.is_multipart():
-            return set()
+            return (), ()
         # The interesting bits are in the first text/plain multipart.
         part = None
         try:
@@ -55,10 +55,10 @@ class Sina:
         except IndexError:
             pass
         if not part:
-            return set()
+            return (), ()
         addresses = set()
         for line in body_line_iterator(part):
             mo = acre.match(line)
             if mo:
                 addresses.add(mo.group('addr'))
-        return addresses
+        return (), addresses

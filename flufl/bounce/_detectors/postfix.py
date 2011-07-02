@@ -39,7 +39,7 @@ from cStringIO import StringIO
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 # Are these heuristics correct or guaranteed?
@@ -96,7 +96,7 @@ class Postfix:
     def process(self, msg):
         """See `IBounceDetector`."""
         if msg.get_content_type() not in REPORT_TYPES:
-            return set()
+            return (), ()
         # We're looking for the plain/text subpart with a Content-Description:
         # of 'notification'.
         leaves = []
@@ -105,5 +105,5 @@ class Postfix:
             content_type = subpart.get_content_type()
             content_desc = subpart.get('content-description', '').lower()
             if content_type == 'text/plain' and content_desc == 'notification':
-                return set(findaddr(subpart))
-        return set()
+                return (), set(findaddr(subpart))
+        return (), ()

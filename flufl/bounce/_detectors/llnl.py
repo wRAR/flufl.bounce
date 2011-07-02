@@ -30,7 +30,7 @@ import re
 from email.iterators import body_line_iterator
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 acre = re.compile(r',\s*(?P<addr>\S+@[^,]+),', re.IGNORECASE)
@@ -48,5 +48,5 @@ class LLNL:
         for line in body_line_iterator(msg):
             mo = acre.search(line)
             if mo:
-                return set([mo.group('addr')])
-        return set()
+                return (), set([mo.group('addr')])
+        return (), ()

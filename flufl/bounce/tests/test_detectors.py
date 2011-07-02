@@ -44,7 +44,9 @@ class OtherBounceTests(unittest.TestCase):
                                      'postfix_01.txt')) as fp:
             msg = message_from_file(fp)
         self.failIf(msg['x-mailer'] is not None)
-        self.failIf(SMTP32().process(msg))
+        temporary, permanent = SMTP32().process(msg)
+        self.failIf(temporary)
+        self.failIf(permanent)
 
     def test_caiwireless(self):
         # BAW: this is a mostly bogus test; I lost the samples. :(
@@ -56,7 +58,9 @@ Content-Type: multipart/report; boundary=BOUNDARY
 --BOUNDARY--
 
 """)
-        self.assertEqual(len(Caiwireless().process(msg)), 0)
+        temporary, permanent = Caiwireless().process(msg)
+        self.failIf(temporary)
+        self.failIf(permanent)
 
     def test_microsoft(self):
         # BAW: similarly as above, I lost the samples. :(
@@ -68,7 +72,9 @@ Content-Type: multipart/report; boundary=BOUNDARY
 --BOUNDARY--
 
 """)
-        self.assertEqual(len(Microsoft().process(msg)), 0)
+        temporary, permanent = Microsoft().process(msg)
+        self.failIf(temporary)
+        self.failIf(permanent)
 
 
 

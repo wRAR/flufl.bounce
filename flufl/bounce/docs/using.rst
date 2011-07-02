@@ -31,6 +31,9 @@ bouncing.  Here for example, is a simple DSN-like bounce message:
     ... Original-Recipient: rfc822;anne@example.com
     ... Action: failed
     ...
+    ... Original-Recipient: rfc822;bart@example.com
+    ... Action: delayed
+    ...
     ... --AAA--
     ... """)
 
@@ -42,12 +45,21 @@ bouncing.  Here for example, is a simple DSN-like bounce message:
     ...     for email in sorted(recipients):
     ...         print email
 
-Now that we have a bounce message as an object, we can get the set of original
-recipients.
+You can scan the bounce message object to get a set of all the email addresses
+that have permanent failures.
 
     >>> from flufl.bounce import scan_message
     >>> recipients = scan_message(msg)
     >>> print_emails(recipients)
+    anne@example.com
+
+You can also get the set of all temporarily and permanent failures.
+
+    >>> from flufl.bounce import all_failures
+    >>> temporary, permanent = all_failures(msg)
+    >>> print_emails(temporary)
+    bart@example.com
+    >>> print_emails(permanent)
     anne@example.com
 
 

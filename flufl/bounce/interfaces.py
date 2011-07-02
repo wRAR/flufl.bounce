@@ -21,19 +21,10 @@ from __future__ import absolute_import, unicode_literals
 __metaclass__ = type
 __all__ = [
     'IBounceDetector',
-    'Stop',
     ]
 
 
 from zope.interface import Interface
-
-
-
-# If a bounce detector returns Stop, that means to just discard the
-# message.  An example is warning messages for temporary delivery
-# problems.  These shouldn't trigger a bounce notification, but we also
-# don't want to send them on to the list administrator.
-Stop = object()
 
 
 
@@ -45,8 +36,10 @@ class IBounceDetector(Interface):
 
         :param msg: An email message.
         :type msg: `Message`
-        :return: The detected bouncing addresses.  When bouncing addresses are
-            found but are determined to be non-fatal, the value `Stop` is
-            returned to halt any bounce processing pipeline.
-        :rtype: A set strings, or `Stop`
+        :return: A 2-tuple of the detected temporary and permanent bouncing
+            addresses.  Both elements of the tuple are sets of string
+            email addresses.  Not all detectors can tell the difference
+            between temporary and permanent failures, in which case, the
+            addresses will be considered to be permanently bouncing.
+        :rtype: (set of strings, set of string)
         """

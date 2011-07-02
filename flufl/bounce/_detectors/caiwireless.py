@@ -31,7 +31,7 @@ from email.iterators import body_line_iterator
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 tcre = re.compile(r'the following recipients did not receive this message:',
@@ -52,7 +52,7 @@ class Caiwireless:
 
     def process(self, msg):
         if msg.get_content_type() != 'multipart/mixed':
-            return set()
+            return (), ()
         state = ParseState.start
         # This format thinks it's a MIME, but it really isn't.
         for line in body_line_iterator(msg):
@@ -62,5 +62,5 @@ class Caiwireless:
             elif state is ParseState.tag_seen and line:
                 mo = acre.match(line)
                 if not mo:
-                    return set()
-                return set(mo.group('addr'))
+                    return (), ()
+                return (), set(mo.group('addr'))
