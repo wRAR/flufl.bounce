@@ -21,11 +21,11 @@ from __future__ import absolute_import, unicode_literals
 __metaclass__ = type
 __all__ = [
     '__version__',
-    'detect',
+    'scan_message',
     ]
 
 
 __version__ = '1.0'
 
 
-from ._detect import detect
+from ._detect import scan_message

@@ -45,8 +45,8 @@ bouncing.  Here for example, is a simple DSN-like bounce message:
 Now that we have a bounce message as an object, we can get the set of original
 recipients.
 
-    >>> from flufl.bounce import detect
-    >>> recipients = detect(msg)
+    >>> from flufl.bounce import scan_message
+    >>> recipients = scan_message(msg)
     >>> print_emails(recipients)
     anne@example.com
 

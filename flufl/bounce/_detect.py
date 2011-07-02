@@ -20,12 +20,42 @@ from __future__ import absolute_import, unicode_literals
 
 __metaclass__ = type
 __all__ = [
-    'detect',
+    'scan_message',
     ]
 
 
+import os
+import sys
+import logging
+
+from flufl.bounce._interfaces import IBounceDetector, Stop
+from pkg_resources import resource_listdir
+
+
+log = logging.getLogger('flufl.bounce')
+
+
 
-def detect(msg):
+def _find_detectors(package):
+    # See Mailman 3's scan_module() and find_components()
+    missing = object()
+    for filename in resource_listdir(package, ''):
+        basename, extension = os.path.splitext(filename)
+        if extension != '.py':
+            continue
+        module_name = '{0}.{1}'.format(package, basename)
+        __import__(module_name, fromlist='*')
+        module = sys.modules[module_name]
+        for name in getattr(module, '__all__', []):
+            component = getattr(module, name, missing)
+            if component is missing:
+                log.error('skipping missing __all__ entry: {0}'.format(name))
+            if IBounceDetector.implementedBy(component):
+                yield component
+
+
+
+def scan_message(msg):
     """Detect the set of bouncing original recipients.
 
     :param msg: The bounce message.
@@ -33,4 +63,11 @@ def detect(msg):
     :return: The set of detected original recipients.
     :rtype: set of strings
     """
-    return set(['anne@example.com'])
+    fatal_addresses = set()
+    package = 'flufl.bounce._bouncers'
+    for detector_class in _find_detectors(package):
+        addresses = detector_class().process(msg)
+        if addresses is Stop:
+            return Stop
+        fatal_addresses.update(addresses)
+    return fatal_addresses

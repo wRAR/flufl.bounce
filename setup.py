@@ -42,6 +42,10 @@ setup(
     license='LGPLv3',
     url='http://launchpad.net/flufl.bounce',
     download_url='https://launchpad.net/flufl.bounce/+download',
+    install_requires = [
+        'flufl.enum',
+        'zope.interface',
+        ],
     test_suite='flufl.bounce.tests',
     # Auto-conversion to Python 3.
     use_2to3=True,
