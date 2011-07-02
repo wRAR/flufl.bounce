@@ -39,12 +39,14 @@ COMMASPACE = ', '
 class BounceTestCase(unittest.TestCase):
     """Test a single bounce detection."""
 
-    def __init__(self, bounce_module, sample_file, expected):
+    def __init__(self, bounce_module, sample_file,
+                 expected, is_temporary=False):
         """See `unittest.TestCase`."""
         unittest.TestCase.__init__(self)
         self.bounce_module = bounce_module
         self.sample_file = sample_file
         self.expected = set(expected)
+        self.is_temporary = is_temporary
 
     def setUp(self):
         """See `unittest.TestCase`."""
@@ -58,8 +60,10 @@ class BounceTestCase(unittest.TestCase):
     def shortDescription(self):
         """See `unittest.TestCase`."""
         expected = COMMASPACE.join(sorted(self.expected))
-        return '{0}: detecting {1} in {2}'.format(
-            self.bounce_module, expected, self.sample_file)
+        return '{0}: [{1}] detecting {2} in {3}'.format(
+            self.bounce_module,
+            ('T' if self.is_temporary else 'P'),
+            expected, self.sample_file)
 
     def __str__(self):
         # XXX Ugly disgusting hack to make both unittest and zope.testrunner
@@ -79,15 +83,19 @@ class BounceTestCase(unittest.TestCase):
             component = component_class()
             # XXX 2011-07-02: We don't currently test temporary failures.
             temporary, permanent = component.process(self.message)
-            temporary = set(temporary)
-            permanent = set(permanent)
-            self.assertEqual(permanent, self.expected)
+            got = (set(temporary) if self.is_temporary else set(permanent))
+            self.assertEqual(got, self.expected)
 
 
 
 def make_test_cases():
-    for module, filename, expected in DATA:
-        test = BounceTestCase(module, filename, expected)
+    for data in DATA:
+        if len(data) == 3:
+            module, filename, expected = data
+            is_temporary = False
+        else:
+            module, filename, expected, is_temporary = data
+        test = BounceTestCase(module, filename, expected, is_temporary)
         yield test
 
 
@@ -142,11 +150,11 @@ DATA = (
     ('simplematch', 'bounce_02.txt', ['acinsp1@midsouth.rr.com']),
     ('simplematch', 'bounce_03.txt', ['james@jeborall.demon.co.uk']),
     # SimpleWarning
-    ## ('simplewarning', 'simple_03.txt', Stop),
-    ## ('simplewarning', 'simple_21.txt', Stop),
-    ## ('simplewarning', 'simple_22.txt', Stop),
-    ## ('simplewarning', 'simple_28.txt', Stop),
-    ## ('simplewarning', 'simple_35.txt', Stop),
+    ('simplewarning', 'simple_03.txt', ['jacobus@geo.co.za'], True),
+    ('simplewarning', 'simple_21.txt', ['assumpeatman@dsgmfg.com'], True),
+    ('simplewarning', 'simple_22.txt', ['RLipton@prev.org'], True),
+    ('simplewarning', 'simple_28.txt', ['luis.hiam@gmail.com'], True),
+    ('simplewarning', 'simple_35.txt', ['calvin@xxx.com'], True),
     # GroupWise
     ('groupwise', 'groupwise_01.txt', ['thoff@MAINEX1.ASU.EDU']),
     # This one really sucks 'cause it's text/html.  Just make sure it
@@ -163,10 +171,11 @@ DATA = (
     ('dsn', 'dsn_02.txt', ['zzzzz@zeus.hud.ac.uk']),
     ('dsn', 'dsn_03.txt', ['ddd.kkk@advalvas.be']),
     ('dsn', 'dsn_04.txt', ['max.haas@unibas.ch']),
-    ## ('dsn', 'dsn_05.txt', Stop),
-    ## ('dsn', 'dsn_06.txt', Stop),
-    ## ('dsn', 'dsn_07.txt', Stop),
-    ## ('dsn', 'dsn_08.txt', Stop),
+    ('dsn', 'dsn_05.txt', ['pkocmid@atlas.cz'], True),
+    ('dsn', 'dsn_06.txt', ['hao-nghi.au@fr.thalesgroup.com'], True),
+    ('dsn', 'dsn_07.txt', ['david.farrar@parliament.govt.nz'], True),
+    ('dsn', 'dsn_08.txt',
+      ['news-list.zope@localhost.bln.innominate.de'], True),
     ('dsn', 'dsn_09.txt', ['pr@allen-heath.com']),
     ('dsn', 'dsn_10.txt', ['anne.person@dom.ain']),
     ('dsn', 'dsn_11.txt', ['joem@example.com']),
@@ -175,7 +184,7 @@ DATA = (
     ('dsn', 'dsn_14.txt', ['artboardregistration@home.dk']),
     ('dsn', 'dsn_15.txt', ['horu@ccc-ces.com']),
     ('dsn', 'dsn_16.txt', ['hishealinghand@pastors.com']),
-    ## ('dsn', 'dsn_17.txt', Stop),
+    ('dsn', 'dsn_17.txt', ['christine.barsas@sivarikeskus.fi'], True),
     # Microsoft Exchange
     ('exchange', 'microsoft_01.txt', ['DJBENNETT@IKON.COM']),
     ('exchange', 'microsoft_02.txt', ['MDMOORE@BALL.COM']),

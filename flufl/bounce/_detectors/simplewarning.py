@@ -42,22 +42,18 @@ PATTERNS = [
     (_c('The address to which the message has not yet been delivered is'),
      _c('No action is required on your part'),
      _c(r'\s*(?P<addr>\S+@\S+)\s*')),
-    # This is from MessageSwitch.  It is a kludge because the text that
-    # identifies it as a warning only comes after the address.  We can't
-    # use ecre, because it really isn't significant, so we fake it.  Once
-    # we see the start, we know it's a warning, and we're going to return
-    # Stop anyway, so we match anything for the address and end.
-    (_c('This is just a warning, you do not need to take any action'),
-     _c('.+'),
-     _c('(?P<addr>.+)')),
-    # Symantec_AntiVirus_for_SMTP_Gateways - see comments for MessageSwitch
-    (_c('Delivery attempts will continue to be made'),
-     _c('.+'),
-     _c('(?P<addr>.+)')),
+    # MessageSwitch
+    (_c('Your message to:'),
+     _c('This is just a warning, you do not need to take any action'),
+     _c(r'\s*(?P<addr>\S+@\S+)\s*')),
+    # Symantec_AntiVirus_for_SMTP_Gateways
+    (_c('Your message with Subject:'),
+     _c('Delivery attempts will continue to be made'),
+     _c(r'\s*(?P<addr>\S+@\S+)\s*')),
     # googlemail.com warning
     (_c('Delivery to the following recipient has been delayed'),
-     _c('.+'),
-     _c('\s*(?P<addr>.+)')),
+     _c('Message will be retried'),
+     _c(r'\s*(?P<addr>\S+@\S+)\s*')),
     # Exchange warning message.
     (_c('This is an advisory-only email'),
      _c('has been postponed'),
@@ -76,4 +72,5 @@ class SimpleWarning(SimpleMatch):
         """See `SimpleMatch`."""
         # Since these are warnings, they're classified as temporary failures.
         # There are no permanent failures.
-        return super(SimpleWarning, self).process(msg), ()
+        temporary, permanent = super(SimpleWarning, self).process(msg)
+        return permanent, ()
