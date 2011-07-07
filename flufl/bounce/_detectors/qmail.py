@@ -40,7 +40,7 @@ from email.iterators import body_line_iterator
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce.interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector, NoTemporaryFailures
 
 
 # Other (non-standard?) intros have been observed in the wild.
@@ -94,4 +94,4 @@ class Qmail:
             else:
                 # We're not looking at anything in particular.
                 pass
-        return (), addresses
+        return NoTemporaryFailures, addresses

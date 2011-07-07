@@ -21,10 +21,29 @@ from __future__ import absolute_import, unicode_literals
 __metaclass__ = type
 __all__ = [
     'IBounceDetector',
+    'NoFailures',
+    'NoPermanentFailures',
+    'NoTemporaryFailures',
     ]
 
 
 from zope.interface import Interface
+
+
+
+# Constants for improved readability in detector classes.  Use these like so:
+#
+# - to signal that no temporary or permanent failures were found:
+#   `return NoFailures`
+# - to signal that no temporary failures, but some permanent failures were
+#   found:
+#   `return NoTemporaryFailures, my_permanent_failures`
+# - to signal that some temporary failures, but no permanent failures were
+#   found:
+#   `return my_temporary_failures, NoPermanentFailures`
+
+NoTemporaryFailures = NoPermanentFailures = ()
+NoFailures = (NoTemporaryFailures, NoPermanentFailures)
 
 
 

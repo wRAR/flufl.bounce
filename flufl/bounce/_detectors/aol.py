@@ -30,7 +30,8 @@ import re
 from email.Utils import parseaddr
 from zope.interface import implements
 
-from flufl.bounce.interfaces import IBounceDetector
+from flufl.bounce.interfaces import (
+    IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
 scre = re.compile('mail to the following recipients could not be delivered')
@@ -44,9 +45,9 @@ class AOL:
 
     def process(self, msg):
         if msg.get_content_type() != 'text/plain':
-            return set()
+            return NoFailures
         if not parseaddr(msg.get('from', ''))[1].lower().endswith('@aol.com'):
-            return set()
+            return NoFailures
         addresses = set()
         found = False
         for line in msg.get_payload(decode=True).splitlines():
@@ -62,4 +63,4 @@ class AOL:
                         addresses.add(local)
                     else:
                         addresses.add('{0}@aol.com'.format(local))
-        return (), addresses
+        return NoTemporaryFailures, addresses

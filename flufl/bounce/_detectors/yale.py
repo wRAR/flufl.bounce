@@ -39,7 +39,8 @@ from email.utils import getaddresses
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce.interfaces import IBounceDetector
+from flufl.bounce.interfaces import (
+    IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
 scre = re.compile(r'Message not delivered to the following', re.IGNORECASE)
@@ -61,21 +62,21 @@ class Yale:
     def process(self, msg):
         """See `IBounceDetector`."""
         if msg.is_multipart():
-            return (), ()
+            return NoFailures
         try:
             whofrom = getaddresses([msg.get('from', '')])[0][1]
             if not whofrom:
-                return (), ()
+                return NoFailures
             username, domain = whofrom.split('@', 1)
         except (IndexError, ValueError):
-            return (), ()
+            return NoFailures
         if username.lower() != 'mailer-daemon':
-            return (), ()
+            return NoFailures
         parts = domain.split('.')
         parts.reverse()
         for part1, part2 in zip(parts, ('edu', 'yale')):
             if part1 != part2:
-                return (), ()
+                return NoFailures
         # Okay, we've established that the bounce came from the mailer-daemon
         # at yale.edu.  Let's look for a name, and then guess the relevant
         # domains.
@@ -97,4 +98,4 @@ class Yale:
         for name in names:
             addresses.add(name + '@yale.edu')
             addresses.add(name + '@cs.yale.edu')
-        return (), addresses
+        return NoTemporaryFailures, addresses

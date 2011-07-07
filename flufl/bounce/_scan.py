@@ -28,7 +28,7 @@ import os
 import sys
 import logging
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 from pkg_resources import resource_listdir
 
 
@@ -66,7 +66,12 @@ def scan_message(msg):
     permanent_failures = set()
     package = 'flufl.bounce._detectors'
     for detector_class in _find_detectors(package):
-        temporary, permanent = detector_class().process(msg)
+        log.info('Running detector: {0}'.format(detector_class))
+        try:
+            temporary, permanent = detector_class().process(msg)
+        except Exception:
+            log.exception('Exception in detector: {0}'.format(detector_class))
+            raise
         permanent_failures.update(permanent)
     return permanent_failures
 
@@ -84,7 +89,8 @@ def all_failures(msg):
     permanent_failures = set()
     package = 'flufl.bounce._detectors'
     for detector_class in _find_detectors(package):
+        log.info('Running detector: {0}'.format(detector_class))
         temporary, permanent = detector_class().process(msg)
         temporary_failures.update(temporary)
         permanent_failures.update(permanent)
-    return temporary, permanent
+    return temporary_failures, permanent_failures

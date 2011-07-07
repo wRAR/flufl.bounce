@@ -30,9 +30,10 @@ import atexit
 import doctest
 import unittest
 
-# pylint: disable-msg=F0401
 from pkg_resources import (
     resource_filename, resource_exists, resource_listdir, cleanup_resources)
+
+from flufl.bounce.tests.helpers import initialize_logging
 
 
 COMMASPACE = ', '
@@ -69,6 +70,7 @@ def setup(testobj):
 
 def additional_tests():
     "Run the doc tests (README.rst and docs/*, if any exist)"
+    initialize_logging()
     doctest_files = [
         os.path.abspath(resource_filename('flufl.bounce', 'README.rst'))]
     if resource_exists('flufl.bounce', 'docs'):

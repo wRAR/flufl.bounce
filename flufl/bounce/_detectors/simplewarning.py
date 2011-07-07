@@ -23,8 +23,9 @@ __all__ = [
     ]
 
 
-from flufl.bounce._detectors.simplematch import _c
 from flufl.bounce._detectors.simplematch import SimpleMatch
+from flufl.bounce._detectors.simplematch import _c
+from flufl.bounce.interfaces import NoPermanentFailures
 
 
 
@@ -72,5 +73,6 @@ class SimpleWarning(SimpleMatch):
         """See `SimpleMatch`."""
         # Since these are warnings, they're classified as temporary failures.
         # There are no permanent failures.
-        temporary, permanent = super(SimpleWarning, self).process(msg)
-        return permanent, ()
+        (temporary,
+         permanent_really_temporary) = super(SimpleWarning, self).process(msg)
+        return permanent_really_temporary, NoPermanentFailures

@@ -33,7 +33,7 @@ from email.iterators import typed_subpart_iterator
 from email.utils import parseaddr
 from zope.interface import implements
 
-from flufl.bounce._interfaces import IBounceDetector
+from flufl.bounce.interfaces import IBounceDetector
 
 
 

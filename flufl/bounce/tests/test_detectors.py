@@ -34,6 +34,7 @@ from flufl.bounce._detectors.caiwireless import Caiwireless
 from flufl.bounce._detectors.microsoft import Microsoft
 from flufl.bounce._detectors.smtp32 import SMTP32
 from flufl.bounce._detectors.tests.detectors import make_test_cases
+from flufl.bounce.tests.helpers import initialize_logging
 
 
 
@@ -80,6 +81,7 @@ Content-Type: multipart/report; boundary=BOUNDARY
 
 def load_tests(loader, tests, pattern):
     """Interface to setuptools.py test runner."""
+    initialize_logging()
     suite = unittest.TestSuite()
     for test_case in make_test_cases():
         suite.addTest(test_case)

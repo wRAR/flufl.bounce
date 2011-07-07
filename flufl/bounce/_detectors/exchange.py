@@ -30,7 +30,8 @@ import re
 from email.iterators import body_line_iterator
 from zope.interface import implements
 
-from flufl.bounce.interfaces import IBounceDetector
+from flufl.bounce.interfaces import (
+    IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
 scre = re.compile('did not reach the following recipient')
@@ -54,7 +55,7 @@ class Exchange:
             if scre.search(line):
                 break
         else:
-            return (), ()
+            return NoFailures
         # Search each line until we hit the end line.
         for line in it:
             if ecre.search(line):
@@ -64,4 +65,4 @@ class Exchange:
                 mo = a2cre.search(line)
             if mo:
                 addresses.add(mo.group('addr'))
-        return (), set(addresses)
+        return NoTemporaryFailures, set(addresses)

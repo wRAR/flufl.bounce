@@ -32,7 +32,8 @@ from email.utils import parseaddr
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce.interfaces import IBounceDetector
+from flufl.bounce.interfaces import (
+    IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
 tcre = re.compile(r'message\s+from\s+yahoo\.\S+', re.IGNORECASE)
@@ -57,7 +58,7 @@ class Yahoo:
         # called an x-uidl: header, the value of which seems unimportant.
         sender = parseaddr(msg.get('from', '').lower())[1] or ''
         if not sender.startswith('mailer-daemon@yahoo'):
-            return (), ()
+            return NoFailures
         addresses = set()
         state = ParseState.start
         for line in email.Iterators.body_line_iterator(msg):
@@ -73,4 +74,4 @@ class Yahoo:
                 if mo:
                     # We're at the end of the error response.
                     break
-        return (), addresses
+        return NoTemporaryFailures, addresses

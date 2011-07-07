@@ -31,7 +31,8 @@ from cStringIO import StringIO
 from flufl.enum import Enum
 from zope.interface import implements
 
-from flufl.bounce.interfaces import IBounceDetector
+from flufl.bounce.interfaces import (
+    IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
 scre = re.compile(r'transcript of session follows', re.IGNORECASE)
@@ -50,17 +51,17 @@ class Microsoft:
 
     def process(self, msg):
         if msg.get_content_type() != 'multipart/mixed':
-            return (), ()
+            return NoFailures
         # Find the first subpart, which has no MIME type.
         try:
             subpart = msg.get_payload(0)
         except IndexError:
             # The message *looked* like a multipart but wasn't.
-            return (), ()
+            return NoFailures
         data = subpart.get_payload()
         if isinstance(data, list):
             # The message is a multi-multipart, so not a matching bounce.
-            return (), ()
+            return NoFailures
         body = StringIO(data)
         state = ParseState.start
         addresses = set()
@@ -71,4 +72,4 @@ class Microsoft:
             elif state is ParseState.tag_seen:
                 if '@' in line:
                     addresses.add(line.strip())
-        return (), set(addresses)
+        return NoTemporaryFailures, set(addresses)
