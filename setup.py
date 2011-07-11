@@ -27,6 +27,11 @@ require_python(0x20600f0)
 __version__ = get_version('flufl/bounce/__init__.py')
 
 
+# Don't try to fix the tests messages.
+doctests = [doctest for doctest in find_doctests()
+            if 'tests/data' not in doctest]
+
+
 setup(
     name='flufl.bounce',
     version=__version__,
@@ -49,5 +54,5 @@ setup(
     test_suite='flufl.bounce.tests',
     # Auto-conversion to Python 3.
     use_2to3=True,
-    convert_2to3_doctests=find_doctests(),
+    convert_2to3_doctests=doctests,
     )
