@@ -28,7 +28,7 @@ extensions = ['sphinx.ext.autodoc']
 templates_path = ['../../_templates']
 
 # The suffix of source filenames.
-source_suffix = '.txt'
+source_suffix = '.rst'
 
 # The encoding of source files.
 #source_encoding = 'utf-8'
@@ -65,7 +65,7 @@ release = __version__
 
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
-exclude_trees = ['_build', 'build', 'flufl.bounce.egg-info', 'distribute-0.6.10']
+exclude_trees = ['_build', 'build', 'flufl.bounce.egg-info', 'distribute-0.6.10', 'tests/data']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
@@ -173,7 +173,7 @@ htmlhelp_basename = 'fluflbouncedoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('README.txt', 'fluflbounce.tex', u'flufl.bounce Documentation',
+  ('README.rst', 'fluflbounce.tex', u'flufl.bounce Documentation',
    u'Barry A. Warsaw', 'manual'),
 ]
 
@@ -194,12 +194,17 @@ latex_documents = [
 # If false, no module index is generated.
 #latex_use_modindex = True
 
+import errno
+
 def index_html():
     cwd = os.getcwd()
     try:
         os.chdir('build/sphinx/html')
         os.symlink('README.html', 'index.html')
         print 'index.html -> README.html'
+    except OSError as error:
+        if error.errno != errno.EEXIST:
+            raise
     finally:
         os.chdir(cwd)
 
