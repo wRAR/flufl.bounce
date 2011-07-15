@@ -2,7 +2,7 @@
 NEWS for flufl.bounce
 =====================
 
-0.91 (2011-07-07)
+0.91 (2011-07-15)
 =================
  * Provide a nicer interface for detector modules.  Instead of using the magic
    empty tuple returns, provide three convenience constants in the interfaces
