@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2011 by the Free Software Foundation, Inc.
+# Copyright (C) 2001-2011 by Barry A. Warsaw
 #
 # This file is part of GNU Mailman.
 #
