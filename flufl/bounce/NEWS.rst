@@ -2,6 +2,11 @@
 NEWS for flufl.bounce
 =====================
 
+1.0 (2011-08-22)
+================
+ * Initial release.
+
+
 0.91 (2011-07-15)
 =================
  * Provide a nicer interface for detector modules.  Instead of using the magic
