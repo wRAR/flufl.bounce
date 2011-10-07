@@ -1,19 +1,18 @@
 # Copyright (C) 1998-2011 by Barry A. Warsaw
 #
-# This file is part of GNU Mailman.
+# This file is part of flufl.bounce
 #
-# GNU Mailman is free software: you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free
-# Software Foundation, either version 3 of the License, or (at your option)
-# any later version.
+# flufl.bounce is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by the
+# Free Software Foundation, version 3 of the License.
 #
-# GNU Mailman is distributed in the hope that it will be useful, but WITHOUT
+# flufl.bounce is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-# more details.
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+# for more details.
 #
-# You should have received a copy of the GNU General Public License along with
-# GNU Mailman.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Lesser General Public License
+# along with flufl.bounce.  If not, see <http://www.gnu.org/licenses/>.
 
 """Yahoo! has its own weird format for bounces."""
 

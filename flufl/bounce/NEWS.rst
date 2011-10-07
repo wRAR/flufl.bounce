@@ -2,6 +2,11 @@
 NEWS for flufl.bounce
 =====================
 
+1.0.1 (2011-10-07)
+================
+ * Fixed licenses.  All code is LGPLv3.
+
+
 1.0 (2011-08-22)
 ================
  * Initial release.
