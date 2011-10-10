@@ -1,3 +1,4 @@
 include *.py
+exclude *.egg
 global-include *.rst *.txt
 prune build
