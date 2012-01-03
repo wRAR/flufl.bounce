@@ -6,6 +6,7 @@ NEWS for flufl.bounce
 ================
  * Add an additional in-the-wild example of a qmail bounce.  Given by Mark
    Sapiro.
+ * Export `all_failures` in the package's namespace.
 
 
 1.0.2 (2011-10-10)

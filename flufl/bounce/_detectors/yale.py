@@ -1,4 +1,4 @@
-# Copyright (C) 2000-2011 by Barry A. Warsaw
+# Copyright (C) 2000-2012 by Barry A. Warsaw
 #
 # This file is part of flufl.bounce
 #
