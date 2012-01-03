@@ -21,11 +21,12 @@ from __future__ import absolute_import, unicode_literals
 __metaclass__ = type
 __all__ = [
     '__version__',
+    'all_failures',
     'scan_message',
     ]
 
 
-__version__ = '1.0.2'
+__version__ = '1.1'
 
 
 from ._scan import all_failures, scan_message

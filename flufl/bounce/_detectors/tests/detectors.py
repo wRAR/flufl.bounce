@@ -204,6 +204,7 @@ DATA = (
     ('qmail', 'qmail_04.txt', ['merotiia@tennisnsw.com.au']),
     ('qmail', 'qmail_05.txt', ['ivokggrrdvc@caixaforte.freeservers.com']),
     ('qmail', 'qmail_06.txt', ['ntl@xxx.com']),
+    ('qmail', 'qmail_07.txt', ['user@example.net']),
     # LLNL's custom Sendmail
     ('llnl', 'llnl_01.txt', ['trotts1@llnl.gov']),
     # Netscape's server...

@@ -2,6 +2,12 @@
 NEWS for flufl.bounce
 =====================
 
+1.1 (2012-01-03)
+================
+ * Add an additional in-the-wild example of a qmail bounce.  Given by Mark
+   Sapiro.
+
+
 1.0.2 (2011-10-10)
 ==================
  * Fixed MANIFEST.in to exclude the .egg.
