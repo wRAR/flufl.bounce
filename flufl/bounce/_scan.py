@@ -37,7 +37,6 @@ log = logging.getLogger('flufl.bounce')
 
 
 def _find_detectors(package):
-    # See Mailman 3's scan_module() and find_components()
     missing = object()
     for filename in resource_listdir(package, ''):
         basename, extension = os.path.splitext(filename)

@@ -25,8 +25,8 @@ __all__ = [
 
 
 import re
-import email
 
+from email.iterators import body_line_iterator
 from email.utils import parseaddr
 from flufl.enum import Enum
 from zope.interface import implements
@@ -60,14 +60,14 @@ class Yahoo:
             return NoFailures
         addresses = set()
         state = ParseState.start
-        for line in email.Iterators.body_line_iterator(msg):
+        for line in body_line_iterator(msg):
             line = line.strip()
             if state is ParseState.start and tcre.match(line):
                 state = ParseState.tag_seen
             elif state is ParseState.tag_seen:
                 mo = acre.match(line)
                 if mo:
-                    addresses.add(mo.group('addr'))
+                    addresses.add(mo.group('addr').encode('us-ascii'))
                     continue
                 mo = ecre.match(line)
                 if mo:

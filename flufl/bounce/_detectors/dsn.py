@@ -91,12 +91,15 @@ class DSN:
                             if param.startswith('<') and param.endswith('>'):
                                 address_set.append(param[1:-1])
         # There may be Nones in the current set of failures, so filter those
-        # out of both sets.
+        # out of both sets.  Also, for Python 3 compatibility, the API
+        # requires byte addresses.
         return (
             # First, the delayed, or temporary failures.
-            set(parseaddr(address)[1] for address in delayed_addresses
+            set(parseaddr(address)[1].encode('us-ascii') 
+                for address in delayed_addresses
                 if address is not None),
             # And now the failed or permanent failures.
-            set(parseaddr(address)[1] for address in failed_addresses
+            set(parseaddr(address)[1].encode('us-ascii') 
+                for address in failed_addresses
                 if address is not None)
             )

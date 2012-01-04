@@ -60,5 +60,5 @@ class Sina:
         for line in body_line_iterator(part):
             mo = acre.match(line)
             if mo:
-                addresses.add(mo.group('addr'))
+                addresses.add(mo.group('addr').encode('us-ascii'))
         return NoTemporaryFailures, addresses

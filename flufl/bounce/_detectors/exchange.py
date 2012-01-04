@@ -63,5 +63,7 @@ class Exchange:
             if not mo:
                 mo = a2cre.search(line)
             if mo:
-                addresses.add(mo.group('addr'))
+                # For Python 3 compatibility, the API requires bytes
+                address = mo.group('addr').encode('us-ascii')
+                addresses.add(address)
         return NoTemporaryFailures, set(addresses)

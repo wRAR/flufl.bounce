@@ -32,14 +32,14 @@ __all__ = [
 import re
 
 from email.message import Message
-from cStringIO import StringIO
+from io import BytesIO
 from zope.interface import implements
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
-acre = re.compile(r'<(?P<addr>[^>]*)>')
+acre = re.compile(b'<(?P<addr>[^>]*)>')
 
 
 
@@ -71,13 +71,13 @@ class GroupWise:
         text_plain = find_textplain(msg)
         if text_plain is None:
             return NoFailures
-        body = StringIO(text_plain.get_payload())
+        body = BytesIO(text_plain.get_payload(decode=True))
         for line in body:
             mo = acre.search(line)
             if mo:
                 addresses.add(mo.group('addr'))
-            elif '@' in line:
-                i = line.find(' ')
+            elif b'@' in line:
+                i = line.find(b' ')
                 if i == 0:
                     continue
                 if i < 0:

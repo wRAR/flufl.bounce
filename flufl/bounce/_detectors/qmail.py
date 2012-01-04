@@ -89,7 +89,7 @@ class Qmail:
                 # paragraph.
                 mo = acre.match(line)
                 if mo:
-                    addresses.add(mo.group('addr'))
+                    addresses.add(mo.group('addr').encode('us-ascii'))
                 # Otherwise, it must be a continuation line, so just ignore it.
             else:
                 # We're not looking at anything in particular.

@@ -52,7 +52,4 @@ setup(
         'zope.interface',
         ],
     test_suite='flufl.bounce.tests',
-    # Auto-conversion to Python 3.
-    use_2to3=True,
-    convert_2to3_doctests=doctests,
     )

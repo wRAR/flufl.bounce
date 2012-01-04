@@ -50,7 +50,10 @@ def _quopri_decode(address):
     # email.quoprimime.header_decode() because that also turns underscores
     # into spaces, which is not good for us.  Instead we'll use the
     # undocumented email.quoprimime.unquote().
-    return re.sub('=[a-fA-F0-9]{2}', _unquote_match, address).strip()
+    #
+    # For compatibility with Python 3, the API requires byte addresses.
+    unquoted = re.sub('=[a-fA-F0-9]{2}', _unquote_match, address)
+    return unquoted.encode('us-ascii').strip()
 
 
 

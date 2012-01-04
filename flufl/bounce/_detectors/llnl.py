@@ -48,5 +48,6 @@ class LLNL:
         for line in body_line_iterator(msg):
             mo = acre.search(line)
             if mo:
-                return NoTemporaryFailures, set([mo.group('addr')])
+                address = mo.group('addr').encode('us-ascii')
+                return NoTemporaryFailures, set([address])
         return NoFailures

@@ -43,6 +43,10 @@ class Exim:
 
     def process(self, msg):
         """See `IBounceDetector`."""
-        all = msg.get_all('x-failed-recipients', [])
+        all_failed = msg.get_all('x-failed-recipients', [])
+        # all_failed will contain string/unicode values, but the flufl.bounce
+        # API requires these to be bytes.  We don't know the encoding, but
+        # assume it must be ascii, per the relevant RFCs.
         return (NoTemporaryFailures,
-                set(address for name, address in getaddresses(all)))
+                set(address.encode('us-ascii')
+                    for name, address in getaddresses(all_failed)))

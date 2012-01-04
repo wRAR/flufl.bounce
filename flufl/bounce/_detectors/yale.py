@@ -33,18 +33,18 @@ __all__ = [
 
 import re
 
-from cStringIO import StringIO
 from email.utils import getaddresses
 from flufl.enum import Enum
+from io import BytesIO
 from zope.interface import implements
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
-scre = re.compile(r'Message not delivered to the following', re.IGNORECASE)
-ecre = re.compile(r'Error Detail', re.IGNORECASE)
-acre = re.compile(r'\s+(?P<addr>\S+)\s+')
+scre = re.compile(b'Message not delivered to the following', re.IGNORECASE)
+ecre = re.compile(b'Error Detail', re.IGNORECASE)
+acre = re.compile(b'\\s+(?P<addr>\\S+)\\s+')
 
 
 class ParseState(Enum):
@@ -80,7 +80,7 @@ class Yale:
         # at yale.edu.  Let's look for a name, and then guess the relevant
         # domains.
         names = set()
-        body = StringIO(msg.get_payload())
+        body = BytesIO(msg.get_payload(decode=True))
         state = ParseState.start
         for line in body:
             if state is ParseState.start and scre.search(line):
@@ -95,6 +95,6 @@ class Yale:
         # @cs.yale.edu.  Add them both.
         addresses = set()
         for name in names:
-            addresses.add(name + '@yale.edu')
-            addresses.add(name + '@cs.yale.edu')
+            addresses.add(name + b'@yale.edu')
+            addresses.add(name + b'@cs.yale.edu')
         return NoTemporaryFailures, addresses

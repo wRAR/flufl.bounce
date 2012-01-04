@@ -34,8 +34,8 @@ __all__ = [
 
 import re
 
-from cStringIO import StringIO
 from flufl.enum import Enum
+from io import BytesIO
 from zope.interface import implements
 
 from flufl.bounce.interfaces import (
@@ -43,10 +43,11 @@ from flufl.bounce.interfaces import (
 
 
 # Are these heuristics correct or guaranteed?
-pcre = re.compile(r'[ \t]*the\s*(bns)?\s*(postfix|keftamail|smtp_gateway)',
-                  re.IGNORECASE)
-rcre = re.compile(r'failure reason:$', re.IGNORECASE)
-acre = re.compile(r'<(?P<addr>[^>]*)>:')
+pcre = re.compile(
+    b'[ \\t]*the\\s*(bns)?\\s*(postfix|keftamail|smtp_gateway)',
+    re.IGNORECASE)
+rcre = re.compile(b'failure reason:$', re.IGNORECASE)
+acre = re.compile(b'<(?P<addr>[^>]*)>:')
 
 REPORT_TYPES = ('multipart/mixed', 'multipart/report')
 
@@ -69,7 +70,7 @@ def flatten(msg, leaves):
 
 def findaddr(msg):
     addresses = set()
-    body = StringIO(msg.get_payload())
+    body = BytesIO(msg.get_payload(decode=True))
     state = ParseState.start
     for line in body:
         # Preserve leading whitespace.

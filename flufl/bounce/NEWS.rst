@@ -2,8 +2,14 @@
 NEWS for flufl.bounce
 =====================
 
-1.1 (2012-01-03)
+2.0 (2012-01-04)
 ================
+ * Port to Python 3 is mostly complete, however the test suite current fails
+   because of <https://bugs.launchpad.net/zope.interface/+bug/911851>.  Once
+   that bug is fixed in `zope.interface`, `flufl.bounce` should be Python 3.2
+   compatible without the need for `2to3`.
+ * All returned addresses are bytes objects in Python 3 and 8-bit strings in
+   Python 2 (no change there).
  * Add an additional in-the-wild example of a qmail bounce.  Given by Mark
    Sapiro.
  * Export `all_failures` in the package's namespace.

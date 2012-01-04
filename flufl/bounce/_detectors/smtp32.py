@@ -77,5 +77,5 @@ class SMTP32:
                 break
             mo = acre.search(line)
             if mo:
-                addresses.add(mo.group('addr'))
+                addresses.add(mo.group('addr').encode('us-ascii'))
         return NoTemporaryFailures, addresses

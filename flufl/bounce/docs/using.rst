@@ -14,9 +14,16 @@ Basic usage
 
 In the most basic form of use, you can just pass an email message to the
 top-level function, and get back a set of email addresses detected as
-bouncing.  Here for example, is a simple DSN-like bounce message:
+bouncing.
 
-    >>> from email import message_from_string as parse
+In Python 3, you should parse the message in binary (i.e. bytes) mode using
+say `email.message_from_bytes()`.  You will get back a set of byte addresses.
+In Python 2, both are 8-bit strings and you would use
+`email.message_from_string()` to parse the message.
+
+Here for example, is a simple DSN-like bounce message.  `parse()` is the
+appropriate email parsing function described above.
+
     >>> msg = parse(b"""\
     ... From: Mail Delivery Subsystem <mailer-daemon@example.com>
     ... To: list-bounces@example.com
@@ -40,10 +47,12 @@ bouncing.  Here for example, is a simple DSN-like bounce message:
 ..
     >>> def print_emails(recipients):
     ...     if recipients is None:
-    ...         print 'None'
+    ...         print('None')
     ...         return
+    ...     if len(recipients) == 0:
+    ...         print('No addresses')
     ...     for email in sorted(recipients):
-    ...         print email
+    ...         print(email)
 
 You can scan the bounce message object to get a set of all the email addresses
 that have permanent failures.

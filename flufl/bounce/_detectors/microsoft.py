@@ -26,8 +26,8 @@ __all__ = [
 
 import re
 
-from cStringIO import StringIO
 from flufl.enum import Enum
+from io import StringIO
 from zope.interface import implements
 
 from flufl.bounce.interfaces import (

@@ -35,7 +35,7 @@ __all__ = [
 
 import re
 
-from cStringIO import StringIO
+from io import BytesIO
 from zope.interface import implements
 
 from flufl.bounce.interfaces import (
@@ -43,11 +43,11 @@ from flufl.bounce.interfaces import (
 
 
 pcre = re.compile(
-    r'This Message was undeliverable due to the following reason:',
+    b'This Message was undeliverable due to the following reason:',
     re.IGNORECASE)
 
 acre = re.compile(
-    r'(?P<reply>please reply to)?.*<(?P<addr>[^>]*)>',
+    b'(?P<reply>please reply to)?.*<(?P<addr>[^>]*)>',
     re.IGNORECASE)
 
 
@@ -88,7 +88,7 @@ class Netscape:
         if not plainmsg:
             return NoFailures
         # Total guesswork, based on captured examples...
-        body = StringIO(plainmsg.get_payload())
+        body = BytesIO(plainmsg.get_payload(decode=True))
         addresses = set()
         for line in body:
             mo = pcre.search(line)

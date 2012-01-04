@@ -17,7 +17,7 @@
 
 """Test harness for doctests."""
 
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, print_function, unicode_literals
 
 __metaclass__ = type
 __all__ = [
@@ -29,6 +29,13 @@ import os
 import atexit
 import doctest
 import unittest
+
+try:
+    # Python 3
+    from email import message_from_bytes as parse
+except ImportError:
+    # Python 2
+    from email import message_from_string as parse
 
 from pkg_resources import (
     resource_filename, resource_exists, resource_listdir, cleanup_resources)
@@ -61,10 +68,12 @@ def setup(testobj):
     # defined.
     try:
         testobj.globs['absolute_import'] = absolute_import
+        testobj.globs['print_function'] = print_function
         testobj.globs['unicode_literals'] = unicode_literals
     except NameError:
         pass
     testobj.globs['stop'] = stop
+    testobj.globs['parse'] = parse
 
 
 

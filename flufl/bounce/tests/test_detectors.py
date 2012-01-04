@@ -27,7 +27,13 @@ __all__ = [
 import unittest
 
 from contextlib import closing
-from email import message_from_file, message_from_string
+from email import message_from_string
+try:
+    # Python 3.2
+    from email import message_from_binary_file as parse
+except ImportError:
+    # Python 2
+    from email import message_from_file as parse
 from pkg_resources import resource_stream
 
 from flufl.bounce._detectors.caiwireless import Caiwireless
@@ -43,7 +49,7 @@ class OtherBounceTests(unittest.TestCase):
         # This file has no X-Mailer: header
         with closing(resource_stream('flufl.bounce.tests.data',
                                      'postfix_01.txt')) as fp:
-            msg = message_from_file(fp)
+            msg = parse(fp)
         self.failIf(msg['x-mailer'] is not None)
         temporary, permanent = SMTP32().process(msg)
         self.failIf(temporary)

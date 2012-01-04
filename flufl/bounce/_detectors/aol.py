@@ -26,20 +26,20 @@ __all__ = [
 
 import re
 
-from email.Utils import parseaddr
+from email.utils import parseaddr
 from zope.interface import implements
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
-scre = re.compile('mail to the following recipients could not be delivered')
+scre = re.compile(b'mail to the following recipients could not be delivered')
 
 
 
 class AOL:
     """Recognizes a class of messages from AOL that report only Screen Name."""
-    
+
     implements(IBounceDetector)
 
     def process(self, msg):
@@ -56,10 +56,10 @@ class AOL:
             if found:
                 local = line.strip()
                 if local:
-                    if re.search(r'\s', local):
+                    if re.search(b'\\s', local):
                         break
-                    if re.search('@', local):
+                    if b'@' in local:
                         addresses.add(local)
                     else:
-                        addresses.add('{0}@aol.com'.format(local))
+                        addresses.add(local + b'@aol.com')
         return NoTemporaryFailures, addresses
