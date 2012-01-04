@@ -1,4 +1,4 @@
-include *.py
+include *.py COPYING.LESSER
 exclude *.egg
 global-include *.rst *.txt
 prune build

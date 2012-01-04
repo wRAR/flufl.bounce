@@ -26,7 +26,7 @@ __all__ = [
     ]
 
 
-__version__ = '1.1'
+__version__ = '2.0'
 
 
 from ._scan import all_failures, scan_message

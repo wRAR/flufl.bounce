@@ -16,6 +16,7 @@ NEWS for flufl.bounce
    There seems to be no portable way to support that and unittest discovery
    (i.e. `python -m unittest discover`) and since the latter requires
    virtualenv, just disable it for now.  (LP: #911399)
+ * Add full copy of LGPLv3 to source tarball. (LP: #871961)
 
 
 1.0.2 (2011-10-10)
