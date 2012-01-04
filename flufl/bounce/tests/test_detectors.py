@@ -85,11 +85,10 @@ Content-Type: multipart/report; boundary=BOUNDARY
 
 
 
-def load_tests(loader, tests, pattern):
+def additional_tests():
     """Interface to setuptools.py test runner."""
     initialize_logging()
     suite = unittest.TestSuite()
     for test_case in make_test_cases():
         suite.addTest(test_case)
-    suite.addTest(unittest.makeSuite(OtherBounceTests))
     return suite

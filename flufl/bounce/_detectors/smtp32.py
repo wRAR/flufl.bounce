@@ -38,7 +38,7 @@ __all__ = [
 import re
 
 from email.iterators import body_line_iterator
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -59,13 +59,12 @@ acre = re.compile(r'''
 
 
 
+@implementer(IBounceDetector)
 class SMTP32:
     """Something which claims
 
     X-Mailer: <SMTP32 vXXXXXX>
     """
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         mailer = msg.get('x-mailer', '')

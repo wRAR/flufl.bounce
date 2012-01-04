@@ -29,7 +29,7 @@ import re
 from email.iterators import body_line_iterator
 from email.quoprimime import unquote
 from flufl.enum import Enum
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import IBounceDetector, NoTemporaryFailures
 
@@ -225,10 +225,9 @@ PATTERNS = [
 
 
 
+@implementer(IBounceDetector)
 class SimpleMatch:
     """Recognizes simple heuristically delimited bounces."""
-
-    implements(IBounceDetector)
 
     PATTERNS = PATTERNS
 

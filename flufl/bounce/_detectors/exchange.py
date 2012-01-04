@@ -27,7 +27,7 @@ __all__ = [
 import re
 
 from email.iterators import body_line_iterator
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -40,10 +40,9 @@ a2cre = re.compile('(?P<addr>[^ ]+) on ')
 
 
 
+@implementer(IBounceDetector)
 class Exchange:
     """Recognizes (some) Microsoft Exchange formats."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

@@ -4,15 +4,18 @@ NEWS for flufl.bounce
 
 2.0 (2012-01-04)
 ================
- * Port to Python 3 is mostly complete, however the test suite current fails
-   because of <https://bugs.launchpad.net/zope.interface/+bug/911851>.  Once
-   that bug is fixed in `zope.interface`, `flufl.bounce` should be Python 3.2
-   compatible without the need for `2to3`.
+ * Port to Python 3 without the use of `2to3`.  Switch to class decorator
+   syntax for declaring that a class implements an interface.  The functional
+   form doesn't work for Python 3.
  * All returned addresses are bytes objects in Python 3 and 8-bit strings in
    Python 2 (no change there).
  * Add an additional in-the-wild example of a qmail bounce.  Given by Mark
    Sapiro.
  * Export `all_failures` in the package's namespace.
+ * Fix `python setup.py test` so that it runs all the tests exactly once.
+   There seems to be no portable way to support that and unittest discovery
+   (i.e. `python -m unittest discover`) and since the latter requires
+   virtualenv, just disable it for now.  (LP: #911399)
 
 
 1.0.2 (2011-10-10)

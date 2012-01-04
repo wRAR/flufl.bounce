@@ -27,7 +27,7 @@ __all__ = [
 import re
 
 from email.utils import parseaddr
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -37,10 +37,9 @@ scre = re.compile(b'mail to the following recipients could not be delivered')
 
 
 
+@implementer(IBounceDetector)
 class AOL:
     """Recognizes a class of messages from AOL that report only Screen Name."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         if msg.get_content_type() != 'text/plain':

@@ -36,7 +36,7 @@ import re
 from email.utils import getaddresses
 from flufl.enum import Enum
 from io import BytesIO
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -53,10 +53,9 @@ class ParseState(Enum):
 
 
 
+@implementer(IBounceDetector)
 class Yale:
     """Parse Yale's bounces (or what used to be)."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

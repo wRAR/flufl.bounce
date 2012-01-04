@@ -36,7 +36,7 @@ __all__ = [
 import re
 
 from io import BytesIO
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -62,10 +62,9 @@ def flatten(msg, leaves):
 
 
 
+@implementer(IBounceDetector)
 class Netscape:
     """Netscape Messaging Server bounce formats."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

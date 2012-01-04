@@ -29,7 +29,7 @@ import re
 from email.iterators import body_line_iterator
 from email.utils import parseaddr
 from flufl.enum import Enum
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -46,10 +46,9 @@ class ParseState(Enum):
 
 
 
+@implementer(IBounceDetector)
 class Yahoo:
     """Yahoo! bounce detection."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

@@ -28,7 +28,7 @@ import re
 
 from flufl.enum import Enum
 from io import StringIO
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -43,10 +43,9 @@ class ParseState(Enum):
 
 
 
+@implementer(IBounceDetector)
 class Microsoft:
     """Microsoft's `SMTPSVC' nears I kin tell."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         if msg.get_content_type() != 'multipart/mixed':

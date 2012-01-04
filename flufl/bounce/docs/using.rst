@@ -52,6 +52,9 @@ appropriate email parsing function described above.
     ...     if len(recipients) == 0:
     ...         print('No addresses')
     ...     for email in sorted(recipients):
+    ...         # Remove the Py3 extraneous b'' prefixes.
+    ...         if bytes is not str:
+    ...             email = repr(email)[2:-1]
     ...         print(email)
 
 You can scan the bounce message object to get a set of all the email addresses

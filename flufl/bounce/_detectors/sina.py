@@ -27,7 +27,7 @@ __all__ = [
 import re
 
 from email.iterators import body_line_iterator
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -37,10 +37,9 @@ acre = re.compile(r'<(?P<addr>[^>]*)>')
 
 
 
+@implementer(IBounceDetector)
 class Sina:
     """sina.com bounces"""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

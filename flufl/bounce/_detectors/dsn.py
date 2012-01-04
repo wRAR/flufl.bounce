@@ -30,16 +30,15 @@ __all__ = [
 
 from email.iterators import typed_subpart_iterator
 from email.utils import parseaddr
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import IBounceDetector
 
 
 
+@implementer(IBounceDetector)
 class DSN:
     """Parse RFC 3464 (i.e. DSN) bounce formats."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

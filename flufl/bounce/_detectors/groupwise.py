@@ -33,7 +33,7 @@ import re
 
 from email.message import Message
 from io import BytesIO
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
@@ -57,10 +57,9 @@ def find_textplain(msg):
 
 
 
+@implementer(IBounceDetector)
 class GroupWise:
     """Parse Novell GroupWise and NTMail bounces."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""

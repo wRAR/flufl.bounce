@@ -37,7 +37,7 @@ import re
 
 from email.iterators import body_line_iterator
 from flufl.enum import Enum
-from zope.interface import implements
+from zope.interface import implementer
 
 from flufl.bounce.interfaces import IBounceDetector, NoTemporaryFailures
 
@@ -62,10 +62,9 @@ class ParseState(Enum):
 
 
 
+@implementer(IBounceDetector)
 class Qmail:
     """Parse QSBMF format bounces."""
-
-    implements(IBounceDetector)
 
     def process(self, msg):
         """See `IBounceDetector`."""
