@@ -14,8 +14,8 @@ formats found in the wild are supported, as are VERP_ and RFC 3464 (DSN_).
 Requirements
 ============
 
-``flufl.bounce`` requires Python 2.6 or newer, and is compatible with Python 3
-when used with ``2to3``.
+``flufl.bounce`` requires Python 2.6 or newer, and is compatible with
+Python 3.
 
 
 Documentation
@@ -62,7 +62,7 @@ You may contact the author via barry@python.org.
 Copyright
 =========
 
-Copyright (C) 2004-2011 Barry A. Warsaw
+Copyright (C) 2004-2012 Barry A. Warsaw
 
 This file is part of flufl.bounce.
 
