@@ -88,9 +88,7 @@ Content-Type: multipart/report; boundary=BOUNDARY
         with closing(resource_stream('flufl.bounce.tests.data',
                                      'simple_01.txt')) as fp:
             msg = parse(fp)
-        temporary, permanent = scan_message(msg)
-        print(temporary)
-        print(permanent)
+        self.assertEquals(scan_message(msg), set(['bbbsss@turbosport.com']))
 
 
 

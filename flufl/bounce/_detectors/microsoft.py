@@ -27,7 +27,7 @@ __all__ = [
 import re
 
 from flufl.enum import Enum
-from io import StringIO
+from io import BytesIO
 from zope.interface import implementer
 
 from flufl.bounce.interfaces import (
@@ -60,7 +60,7 @@ class Microsoft:
         if isinstance(data, list):
             # The message is a multi-multipart, so not a matching bounce.
             return NoFailures
-        body = StringIO(data)
+        body = BytesIO(data)
         state = ParseState.start
         addresses = set()
         for line in body:
