@@ -34,7 +34,7 @@ from flufl.bounce.interfaces import (
     IBounceDetector, NoFailures, NoTemporaryFailures)
 
 
-scre = re.compile(r'transcript of session follows', re.IGNORECASE)
+scre = re.compile(br'transcript of session follows', re.IGNORECASE)
 
 
 class ParseState(Enum):
@@ -56,7 +56,7 @@ class Microsoft:
         except IndexError:
             # The message *looked* like a multipart but wasn't.
             return NoFailures
-        data = subpart.get_payload()
+        data = subpart.get_payload(decode=True)
         if isinstance(data, list):
             # The message is a multi-multipart, so not a matching bounce.
             return NoFailures
