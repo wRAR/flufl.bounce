@@ -16,11 +16,10 @@
 
 """Test the bounce detection modules."""
 
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, print_function, unicode_literals
 
 __metaclass__ = type
 __all__ = [
-    'load_tests',
     ]
 
 
@@ -40,6 +39,7 @@ from flufl.bounce._detectors.caiwireless import Caiwireless
 from flufl.bounce._detectors.microsoft import Microsoft
 from flufl.bounce._detectors.smtp32 import SMTP32
 from flufl.bounce._detectors.tests.detectors import make_test_cases
+from flufl.bounce._scan import scan_message
 from flufl.bounce.tests.helpers import initialize_logging
 
 
@@ -82,6 +82,15 @@ Content-Type: multipart/report; boundary=BOUNDARY
         temporary, permanent = Microsoft().process(msg)
         self.failIf(temporary)
         self.failIf(permanent)
+
+    def test_caiwireless_lp_917720(self):
+        # https://bugs.launchpad.net/flufl.bounce/+bug/917720
+        with closing(resource_stream('flufl.bounce.tests.data',
+                                     'simple_01.txt')) as fp:
+            msg = parse(fp)
+        temporary, permanent = scan_message(msg)
+        print(temporary)
+        print(permanent)
 
 
 
