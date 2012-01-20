@@ -2,6 +2,12 @@
 NEWS for flufl.bounce
 =====================
 
+2.1 (2012-01-19)
+================
+ * Fix TypeError thrown when None is returned by Caiwireless.  Given by Paul
+   Egan. (LP: #917720)
+
+
 2.0 (2012-01-04)
 ================
  * Port to Python 3 without the use of `2to3`.  Switch to class decorator
