@@ -41,9 +41,7 @@ setup(
     maintainer='Barry Warsaw',
     maintainer_email='barry@python.org',
     description=description('README.rst'),
-    long_description=long_description(
-        'flufl/bounce/README.rst',
-        'flufl/bounce/NEWS.rst'),
+    long_description=long_description('README.rst', 'flufl/bounce/NEWS.rst'),
     license='LGPLv3',
     url='http://launchpad.net/flufl.bounce',
     download_url='https://launchpad.net/flufl.bounce/+download',
@@ -52,4 +50,20 @@ setup(
         'zope.interface',
         ],
     test_suite='flufl.bounce.tests',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: '
+            'GNU Lesser General Public License v3 or later (LGPLv3+)',
+        'Operating System :: POSIX',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: MacOS :: MacOS X',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Communications :: Email',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        ]
     )

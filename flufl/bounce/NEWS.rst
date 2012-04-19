@@ -2,6 +2,14 @@
 NEWS for flufl.bounce
 =====================
 
+2.1.1 (2012-04-19)
+==================
+ * Add classifiers to setup.py and make the long description more compatible
+   with the Cheeseshop.
+ * Other changes to make the Cheeseshop page look nicer.  (LP: #680136)
+ * setup_helper.py version 2.1.
+
+
 2.1 (2012-01-19)
 ================
  * Fix TypeError thrown when None is returned by Caiwireless.  Given by Paul

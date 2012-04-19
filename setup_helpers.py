@@ -2,9 +2,9 @@
 #
 # This file is part of flufl.bounce
 #
-# flufl.bounce is free software: you can redistribute it and/or modify it under
-# the terms of the GNU Lesser General Public License as published by the Free
-# Software Foundation, version 3 of the License.
+# flufl.bounce is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by the
+# Free Software Foundation, version 3 of the License.
 #
 # flufl.bounce is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -16,8 +16,7 @@
 
 """setup.py helper functions."""
 
-from __future__ import absolute_import, unicode_literals
-from __future__ import print_function
+from __future__ import absolute_import, print_function, unicode_literals
 
 
 __metaclass__ = type
@@ -36,7 +35,9 @@ import sys
 
 
 DEFAULT_VERSION_RE = re.compile(r'(?P<version>\d+\.\d+(?:\.\d+)?)')
-NL = '\n'
+EMPTYSTRING = ''
+
+__version__ = '2.1'
 
 
 
@@ -104,7 +105,7 @@ def get_version(filename, pattern=None):
 
 
 
-def find_doctests(start='.', extension='.txt'):
+def find_doctests(start='.', extension='.rst'):
     """Find separate-file doctests in the package.
 
     This is useful for Distribute's automatic 2to3 conversion support.  The
@@ -129,19 +130,27 @@ def find_doctests(start='.', extension='.txt'):
 
 def long_description(*filenames):
     """Provide a long description."""
-    res = []
-    for value in filenames:
-        if value.endswith('.txt'):
-            with open(value) as fp:
-                value = fp.read()
-        res.append(value)
-        if not value.endswith(NL):
+    res = ['']
+    for filename in filenames:
+        with open(filename) as fp:
+            for line in fp:
+                res.append('   ' + line)
             res.append('')
-    return NL.join(res)
+        res.append('\n')
+    return EMPTYSTRING.join(res)
 
 
 def description(filename):
     """Provide a short description."""
+    # This ends up in the Summary header for PKG-INFO and it should be a
+    # one-liner.  It will get rendered on the package page just below the
+    # package version header but above the long_description, which ironically
+    # gets stuff into the Description header.  It should not include reST, so
+    # pick out the first single line after the double header.
     with open(filename) as fp:
-        for line in fp:
-            return line.strip()
+        for lineno, line in enumerate(fp):
+            if lineno < 3:
+                continue
+            line = line.strip()
+            if len(line) > 0:
+                return line
