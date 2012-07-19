@@ -46,8 +46,11 @@ You can download the latest version of the package either from the Cheeseshop:
 or from the Launchpad page above.  Of course you can also just install it with
 ``pip`` or ``easy_install`` from the command line::
 
-    % sudo pip flufl.bounce
+    % sudo pip install flufl.bounce
     % sudo easy_install flufl.bounce
+
+You may want to use `virtualenv`_ instead of installing the package into the
+system Python.
 
 You can grab the latest development copy of the code using Bazaar, from the
 Launchpad home page above.  See http://bazaar-vcs.org for details on the
@@ -89,3 +92,4 @@ Table of Contents
     NEWS.rst
 
 .. _`simple guide`: docs/using.html
+.. _`virtualenv`: http://www.virtualenv.org/en/latest/index.html

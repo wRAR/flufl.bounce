@@ -2,6 +2,11 @@
 NEWS for flufl.bounce
 =====================
 
+2.X (2012-XX-XX)
+================
+ * Fix documentation bug.  LP: #1026403
+
+
 2.1.1 (2012-04-19)
 ==================
  * Add classifiers to setup.py and make the long description more compatible
