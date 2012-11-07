@@ -1,0 +1,33 @@
+MIME-Version: 1.0
+Auto-Submitted: auto-generated (failure)
+From: <>
+Subject: Returned mail: see transcript for details
+To: <noreply@example.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+The original message was received at Sun, 4 Nov 2012 10:32:05 +0400 (MSK)
+from lestrade.peterlink.ru [195.242.2.15]
+
+   ----- The following addresses had permanent fatal errors -----
+<foo@rbd.spb.ru>
+    (reason: 550 5.1.1 User unknown)
+
+   ----- Transcript of session follows -----
+... while talking to mx.rbd.spb.ru:
+>>> DATA
+<<< 550 5.1.1 User unknown
+550 5.1.1 <foo@rbd.spb.ru>... User unknown
+<<< 503 5.5.2 Need Rcpt command.
+
+   ----- Message header follows -----
+
+Received: from lestrade.peterlink.ru (lestrade.peterlink.ru [195.242.2.15])
+	by mortimer.peterlink.ru (8.12.6/8.14.2) with ESMTP id qA46W5eh054985
+	for <foo@rbd.spb.ru>; Sun, 4 Nov 2012 10:32:05 +0400 (MSK)
+Received: from kas30pipe.localhost (localhost [127.0.0.1])
+	by lestrade.peterlink.ru (Postfix) with ESMTP id 8F5B04C909
+	for <foo@rbd.spb.ru>; Sun,  4 Nov 2012 10:32:05 +0400 (MSK)
+Received: from tory.peterlink.ru (tory.peterlink.ru [195.242.2.22])
+	by lestrade.peterlink.ru (Postfix) with ESMTP id 571944C907
+	for <foo@rbd.spb.ru>; Sun,  4 Nov 2012 10:32:05 +0400 (MSK)

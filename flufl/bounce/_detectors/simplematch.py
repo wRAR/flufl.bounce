@@ -224,6 +224,10 @@ PATTERNS = [
     (_c('A message that you sent was rejected'),
      _c('This is a copy of your message'),
      _c('\s(?P<addr>[^\s@]+@[^\s@]+)')),
+    # some sendmails
+    (_c('the following addresses had'),
+     _c('transcript of session follows'),
+     _c(r'<(?P<addr>[^>]*)>')),
     # Next one goes here...
     ]
 

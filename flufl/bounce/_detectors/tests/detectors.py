@@ -116,6 +116,7 @@ DATA = (
     ('exim', 'exim_01.txt', [b'delangen@its.tudelft.nl']),
     # SimpleMatch bounces
     ('simplematch', 'sendmail_01.txt', [b'zzzzz@nfg.nl']),
+    ('simplematch', 'sendmail_02.txt', [b'foo@rbd.spb.ru']),
     ('simplematch', 'simple_01.txt', [b'bbbsss@turbosport.com']),
     ('simplematch', 'simple_02.txt', [b'chris.ggggmmmm@usa.net']),
     ('simplematch', 'simple_04.txt', [b'claird@starbase.neosoft.com']),
