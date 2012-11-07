@@ -74,7 +74,7 @@ class Qmail:
             line = line.strip()
             if state is ParseState.start:
                 for introtag in introtags:
-                    if line.startswith(introtag):
+                    if line.startswith(introtag.encode('latin1')):
                         state = ParseState.intro_paragraph_seen
                         break
             elif state is ParseState.intro_paragraph_seen and not line:
