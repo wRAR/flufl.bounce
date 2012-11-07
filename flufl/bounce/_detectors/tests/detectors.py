@@ -152,6 +152,7 @@ DATA = (
     ('simplematch', 'simple_34.txt', [b'roland@xxx.com']),
     ('simplematch', 'simple_36.txt', [b'garyt@xxx.com']),
     ('simplematch', 'simple_37.txt', [b'user@uci.edu']),
+    ('simplematch', 'simple_38.txt', [b'foo@mail.ru']),
     ('simplematch', 'bounce_02.txt', [b'acinsp1@midsouth.rr.com']),
     ('simplematch', 'bounce_03.txt', [b'james@jeborall.demon.co.uk']),
     # SimpleWarning

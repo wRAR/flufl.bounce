@@ -220,6 +220,10 @@ PATTERNS = [
     (_c('Message not delivered to the following addresses'),
      _c('Error detail'),
      _c('\s*(?P<addr>[^\s@]+@[^\s@)]+)')),
+    # mail.ru
+    (_c('A message that you sent was rejected'),
+     _c('This is a copy of your message'),
+     _c('\s(?P<addr>[^\s@]+@[^\s@]+)')),
     # Next one goes here...
     ]
 
